@@ -1,0 +1,1 @@
+OPLib(document.getElementById("DamageCalc"), "Test Context").length;

@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="style/style_1.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
-		<script type="text/javascript" src="../CWeb/cWeb.js"></script>
+		<script type="text/javascript" src="../OPLib/OPLib.js"></script>
 		<script type="text/javascript" src="javascript/javascript_1.js"></script>
 		<title>LoLCalculations</title>
 	</head>
