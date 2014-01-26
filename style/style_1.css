@@ -1,0 +1,56 @@
+body {
+	color: green;
+	background-color: #DDDDDD;
+	font-family: "Arial", "Arial", sans-serif;
+	font-size: 100%;
+}
+
+h1 {
+	text-align: center;
+	font-size: 2.5em;
+	font-variant: small-caps;
+	font-weight: bold;
+}
+
+h2 {
+	text-align: center;
+	font-size: 1.75em;
+	font-variant: small-caps;
+	font-weight: bold;
+}
+
+.Selectables {
+	border-style: solid;
+	border-color: blue;
+	border-width: thin;
+	background-color: grey;
+	margin: 20px;
+	padding: 20px;
+}
+.Selectable {
+	display: inline-block;
+	background-color: white;
+	color: orange;
+	text-align: center;
+	font-size: 1.5em;
+	border: 1px solid black;
+	padding: 20px;
+	width: auto;
+}
+
+a:link {
+	color: orange;
+	text-decoration: none;
+}
+a:visited {
+	color: orange;
+	text-decoration: none;
+}
+a:hover {
+	color: orange;
+	text-decoration: underline;
+}
+a:active {
+	color: green;
+	text-decoration: underline;
+}
