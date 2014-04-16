@@ -19,6 +19,13 @@
 				<a href="Damage Calculation/index.php"> Damage Calculation </a>
 			</div>
 			
+			<script>
+			    
+			    $(".Selectables");
+			    $("#DamageCalc");
+			    $(".Selectable#DamageCalc");
+			    
+			</script>
 
 		</div>
 	</body>

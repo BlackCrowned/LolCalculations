@@ -23,7 +23,7 @@ h2 {
 	border-style: solid;
 	border-color: blue;
 	border-width: thin;
-	background-color: grey;
+	background-color: gray;
 	margin: 20px;
 	padding: 20px;
 }
@@ -36,6 +36,165 @@ h2 {
 	border: 1px solid black;
 	padding: 20px;
 	width: auto;
+}
+
+.Infobox {
+	display: block;
+	background-color: gray;
+	color: green;
+	font-size: 1.5em;
+	border: 1px solid green;
+	padding: 2px 5px 2px 5px;
+}
+
+.InfotextHeading {
+	font-size: 0.75em;
+	text-decoration: underline;
+}
+
+.ChampionInfo {
+	display: table;
+	'position: relative;
+	font-size: 0.75em;
+	border: 1px solid black;
+	'padding: 2px 5px 2px 5px;
+}
+
+.ChampionInfoHeader {
+	display: table;
+	width: 100%;
+	'background: blue;
+	border-bottom: 2px solid black;
+}
+
+.ChampionInfoBlock {
+	display: inline-block;
+	float: left;
+	'padding: 0px 20px 0px 5px;
+	margin: 5px 2% 5px 2%;
+}
+
+.ChampionInfoHeading {
+	display: block;
+	width: auto;
+	font-size: 1.00em;
+	font-variant: small-caps;
+	text-align: center;
+}
+
+.ChampionInfoSubHeading {
+	display: block;
+	width: 100%;
+	font-size: 1.00em;
+	background: #464545;
+}
+
+.ChampionInfoTableSubHeading {
+	display: table-cell;
+	width: 100%;
+	font-size: 1.00em;
+	background: #464545;
+}
+
+.ChampionInfoImage {
+	display: block;
+	float: left;
+	border: 2px groove white;
+}
+
+.ItemsDisplayTable {
+	width: 50px;
+	height: 130px;
+	border: 1px solid black;
+	vertical-align: middle;
+	text-align: center;
+	background: #4BADF5;
+}
+
+.ItemImage {
+	border: 2px double black;
+}
+
+.RuneDisplayTable {
+	height: 130px;
+	border: 1px solid black;
+	background: #4BADF5;
+}
+
+.RuneDisplayTable td {
+	border: 1px solid black;
+}
+
+.RuneDisplayTableStats {
+	width: 100px;
+	height: 50px;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.RuneMarkImage {
+	border: 2px double black;
+	background-image: url(/LolCalculations/etc/MarkBackground.png);
+}
+
+.RuneSealImage {
+	border: 2px double black;
+	background-image: url(/LolCalculations/etc/SealBackground.png);
+}
+
+.RuneGlyphImage {
+	border: 2px double black;
+	background-image: url(/LolCalculations/etc/GlyphBackground.png);
+}
+
+.RuneQuintImage {
+	border: 2px double black;
+	background-image: url(/LolCalculations/etc/SealBackground.png);
+}
+
+.MasteriesDisplayTable {
+	border: 1px solid black;
+	background: #4BADF5;
+}
+
+.MasteriesDisplayTable td {
+	width: 50px;
+	height: 50px;
+	'border: 1px solid black;
+	vertical-align: middle;
+	text-align: center;
+	background: #4BADF5;
+}
+
+.MasteryImage {
+	border: 2px double black;
+}
+
+.LevelDisplayTable {
+	display: inline-block;'border: 1px solid black;
+	'background: #4BADF5;
+}
+
+.LevelDisplayTable td {
+	border: 1px solid black;
+	height: 50%;
+	width: 50px;
+}
+
+.LevelDisplayTableStats {
+	vertical-align: middle;
+	text-align: center;
+	background: #4BADF5;
+}
+
+.StatsDisplayTable {
+	border: 1px solid black;
+}
+
+.StatsDisplayTable td {
+	width: 25%;
+	background-color: #4BADF5;
+	vertical-align: middle;
 }
 
 a:link {
@@ -53,4 +212,8 @@ a:hover {
 a:active {
 	color: green;
 	text-decoration: underline;
+}
+
+.FloatRight {
+	float: right;
 }
