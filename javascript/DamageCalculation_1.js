@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var championInfo;
+    var championStats;
     var version;
     var champions = {};
     var keys = {};
@@ -24,13 +25,33 @@ $(document).ready(function() {
             value: "keys,image"
         }]
     }], {
-        method: "post",
         content: "json",
-        async: true
+    });
+    
+    $().AJAX("../etc/riotAPICalls.php", function(json) {
+        championStats = json;
+        console.log(championStats);
+
+    }, [{
+        key: "url",
+        value: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/champion"
+    }, {
+        key: "options",
+        value: [{
+            key: "champData",
+            value: "stats"
+        }]
+    }], {
+        content: "json",
     });
 
     $("#addChampButton").click(function(e) {
-        //TODO
+        $.AJAX("../etc/championInfo.php", function(text, readyState, status, elem) {
+            $("#selectedChamps").append(text);
+        }, [], {
+            args: e.target,
+            content: "text",
+        });
     });
 });
 
