@@ -27,7 +27,7 @@ $(document).ready(function() {
     }], {
         content: "json",
     });
-    
+
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         championStats = json;
         console.log(championStats);
@@ -47,8 +47,21 @@ $(document).ready(function() {
 
     $("#addChampButton").click(function(e) {
         $.AJAX("../etc/championInfo.php", function(text, readyState, status, elem) {
+            console.log($().ElementSelection.isHtmlString(text));
             $("#selectedChamps").append(text);
-        }, [], {
+        }, [{
+            key: "name",
+            value: "Riven"
+        }, {
+            key: "title",
+            value: "the Exile"
+        }, {
+            key: "version",
+            value: "4.5.4"
+        }, {
+            key: "splash",
+            value: "Riven.png"
+        }], {
             args: e.target,
             content: "text",
         });
