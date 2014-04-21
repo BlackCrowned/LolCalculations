@@ -1,10 +1,12 @@
-$(document).ready(function() {
-    var championInfo;
-    var championStats;
-    var version;
-    var champions = {};
-    var keys = {};
+var championInfo;
+var championStats;
+var version;
+var champions = {};
+var keys = {};
 
+var championInfo = {};
+
+$(document).ready(function() {
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         championInfo = json;
         version = championInfo.version;
@@ -47,8 +49,12 @@ $(document).ready(function() {
 
     $("#addChampButton").click(function(e) {
         $.AJAX("../etc/championInfo.php", function(text, readyState, status, elem) {
-            console.log($().ElementSelection.isHtmlString(text));
-            $("#selectedChamps").append(text);
+            if (!championInfo["Riven"]) {
+                championInfo["Riven"] = [];
+            }
+            var id = "Riven"/* + Math.random()*/;
+            championInfo["Riven"].push(id);
+            $(text).attr("id", id).appendTo("#selectedChamps");
         }, [{
             key: "name",
             value: "Riven"
@@ -68,3 +74,10 @@ $(document).ready(function() {
     });
 });
 
+function fillChampionData(data, id) {
+    for (var i in data) {
+        //console.log($("#" + id).children(1));
+        $("#" + id).children(1).find({className: i}).text(data[i]);
+        
+    }
+}
