@@ -1,13 +1,14 @@
 <?php
 
 $name = $_REQUEST["name"];
+$i = $_REQUEST["i"];
 $title = $_REQUEST["title"];
 $version  = $_REQUEST["version"];
 $splash_file = $_REQUEST["splash"];
 $splash = "http://ddragon.leagueoflegends.com/cdn/$version/img/champion/$splash_file";
 
 echo <<<EOT
-<div class="ChampionInfo">
+<div class="ChampionInfo" id="$name$i">
     <div class="ChampionInfoHeader">
         <div class="ChampionInfoBlock" style="width: 15%;">
             <span class="ChampionInfoHeading ChampionName">$name</span>
@@ -47,15 +48,15 @@ echo <<<EOT
             <table class="RuneDisplayTable">
                 <tr>
                     <td><img class="RuneMarkImage ChampionMarksImage" src="" height="50px" width="50px"/></td>
-                    <td class="RuneDisplayTableStats ChampionMarksStats">8.55 AD</td>
+                    <td class="RuneDisplayTableStats ChampionMarksStats"></td>
                     <td><img class="RuneSealImage ChampionSealsImage" src="" height="50px" width="50px"/></td>
-                    <td class="RuneDisplayTableStats ChampionSealsStats">9 Armor</td>
+                    <td class="RuneDisplayTableStats ChampionSealsStats"></td>
                 </tr>
                 <tr>
                     <td><img class="RuneGlyphImage ChampionGlyphsImage" src="" height="50px" width="50px"/></td>
-                    <td class="RuneDisplayTableStats ChampionGlyphsStats">15% CDR</td>
+                    <td class="RuneDisplayTableStats ChampionGlyphsStats"></td>
                     <td><img class="RuneQuintImage ChampionQuintsImage" src="" height="50px" width="50px"/></td>
-                    <td class="RuneDisplayTableStats ChampionQuintsStats">6% LS</td>
+                    <td class="RuneDisplayTableStats ChampionQuintsStats"></td>
                 </tr>
             </table>
         </div>
@@ -64,9 +65,9 @@ echo <<<EOT
             <table class="MasteriesDisplayTable">
                 <tr>
                     <td><img class="MasteryImage ChampionOffensiveTreeImage" src="http://ddragon.leagueoflegends.com/cdn/4.5.4/img/mastery/4162.png" height="50px" width="50px"/></td>
-                    <td class="ChampionOffensiveTreeStats"> 21 </td>
+                    <td class="ChampionOffensiveTreeStats"> 0 </td>
                     <td><img class="MasteryImage ChampionDefensiveTreeImage" src="http://ddragon.leagueoflegends.com/cdn/4.5.4/img/mastery/4262.png" height="50px" width="50px"/></td>
-                    <td class="ChampionDefensiveTreeStats"> 9 </td>
+                    <td class="ChampionDefensiveTreeStats"> 0 </td>
                     <td><img class="MasteryImage ChampionUtilityTreeImage" src="http://ddragon.leagueoflegends.com/cdn/4.5.4/img/mastery/4362.png" height="50px" width="50px"/></td>
                     <td class="ChampionUtilityTreeStats"> 0 </td>
                 </tr>
@@ -87,8 +88,8 @@ echo <<<EOT
                 </tr>
                 <tr>
                     <td class="LevelDisplayTableStats ChampionSetlevel1"> 1 </td>
-                    <td class="LevelDisplayTableStats ChampionSetlevep1"> +1 </td>
-                    <td class="LevelDisplayTableStats ChampionSetlevem1"> -1 </td>
+                    <td class="LevelDisplayTableStats ChampionSetlevelp1"> +1 </td>
+                    <td class="LevelDisplayTableStats ChampionSetlevelm1"> -1 </td>
                     <td class="LevelDisplayTableStats ChampionSetlevel18"> 18 </td>
                 </tr>
             </table>

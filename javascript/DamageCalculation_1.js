@@ -2,6 +2,7 @@ var championInfo;
 var version;
 var champions = {};
 var ids = {};
+var itemInfo;
 
 $(document).ready(function() {
     $().AJAX("../etc/riotAPICalls.php", function(json) {
@@ -29,6 +30,28 @@ $(document).ready(function() {
         value: [{
             key: "champData",
             value: "image,stats"
+        }, {
+            key: "region",
+            value: "euw"
+        }]
+    }], {
+        content: "json",
+    });
+    $().AJAX("../etc/riotAPICalls.php", function(json) {
+        itemInfo = json;
+        console.log(itemInfo);
+    }, [{
+        key: "url",
+        value: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/item"
+    }, {
+        key: "options",
+        value: [{
+            key: "itemListData",
+            //value: "from,gold,image,into,maps,requiredChampion,stats,tags,tree"
+            value: "all"
+        }, {
+            key: "region",
+            value: "euw"
         }]
     }], {
         content: "json",
@@ -36,10 +59,12 @@ $(document).ready(function() {
 
     $("#addChampButton").click(function(e) {
         var champ = champions[$("#addChampList").find({tag: "option"})[$("#addChampList")[0].selectedIndex].value].name;
+        if (!championInfo[champ]) {
+            championInfo[champ] = [];
+        }
+        var i = championInfo[champ].length;
         $.AJAX("../etc/championInfo.php", function(text, readyState, status, champion) {
-            if (!championInfo[champion]) {
-                championInfo[champion] = [];
-            }
+
             var i = championInfo[champion].length;
             var id = champion + i;
             //Data Structure
@@ -49,21 +74,46 @@ $(document).ready(function() {
                 items: {},
                 runes: {},
                 masteries: {},
+                level: 1,
                 championStats: getChampionData(champion),
                 stats: {}
             });
+            $(text).appendTo("#selectedChamps");
             setStats(champion, i);
-            $(text).attr("id", id).appendTo("#selectedChamps");
+            $("#" + champion + i).children(1, 1).attr("data-name", champion).attr("data-i", i);
             fillChampionData(championInfo[champion][i].stats, champion, i);
+            fillChampionData({
+                ChampionLevel: championInfo[champion][i].level
+            }, champion, i);
+
+            $("#" + id).children(1).find({
+                className: "ChampionRemove"
+            }).click(ChampionRemove);
+            $("#" + id).children(1).find({
+                className: "ChampionSetlevel1"
+            }).click(ChampionSetLevel1);
+            $("#" + id).children(1).find({
+                className: "ChampionSetlevelp1"
+            }).click(ChampionIncreaseLevel);
+            $("#" + id).children(1).find({
+                className: "ChampionSetlevelm1"
+            }).click(ChampionDecreaseLevel);
+            $("#" + id).children(1).find({
+                className: "ChampionSetlevel18"
+            }).click(ChampionSetLevel18);
+
         }, [{
             key: "name",
             value: champ
+        }, {
+            key: "i",
+            value: i
         }, {
             key: "title",
             value: champions[ids[champ]].title
         }, {
             key: "version",
-            value: "4.5.4"
+            value: championInfo.version
         }, {
             key: "splash",
             value: champions[ids[champ]].image.full
@@ -79,7 +129,7 @@ function fillChampionData(data, name, i) {
     for (var i in data) {
         $("#" + id).children(1).find({
             className: i
-        }).text(data[i]);
+        }).text(Math.round(data[i] * 1000) / 1000);
     }
 }
 
@@ -126,5 +176,74 @@ function getChampionData(name) {
 }
 
 function setStats(name, i) {
-    championInfo[name][i].stats = championInfo[name][i].championStats;
+    for (var j in championInfo[name][i].championStats) {
+        if (j.indexOf("perlevel") == -1) {
+            if (j == "ChampionAttackspeedoffset") {
+                championInfo[name][i].stats[j] = championInfo[name][i].championStats[j] * Math.pow(1 + championInfo[name][i].championStats["ChampionAttackspeedperlevel"] / 100, championInfo[name][i].level);
+            }
+            else {
+                championInfo[name][i].stats[j] = championInfo[name][i].championStats[j] + championInfo[name][i].level * championInfo[name][i].championStats[j + "perlevel"];
+            }
+        }
+        else {
+            championInfo[name][i].stats[j] = championInfo[name][i].championStats[j];
+        }
+
+    }
+    fillChampionData(championInfo[name][i].stats, name, i);
+}
+
+/*
+ ******************************************************************************
+ ******************************onClick-Handler*********************************
+ ******************************************************************************
+ */
+
+function ChampionRemove(e) {
+    var name = e.target.getAttribute("data-name");
+    var i = e.target.getAttribute("data-i");
+    $("#" + name + i).anim({
+        opacity: 0,
+        callbacks: {
+            done: function(elem) {
+                elem.parentNode.removeChild(elem);
+            }
+        }
+    });
+}
+
+function ChampionSetLevel1(e) {
+    var name = e.target.getAttribute("data-name");
+    var i = e.target.getAttribute("data-i");
+    fillChampionData({
+        ChampionLevel: championInfo[name][i].level = 1
+    }, name, i);
+    setStats(name, i);
+}
+
+function ChampionIncreaseLevel(e) {
+    var name = e.target.getAttribute("data-name");
+    var i = e.target.getAttribute("data-i");
+    fillChampionData({
+        ChampionLevel: ++championInfo[name][i].level >= 18 ? championInfo[name][i].level = 18 : championInfo[name][i].level
+    }, name, i);
+    setStats(name, i);
+}
+
+function ChampionDecreaseLevel(e) {
+    var name = e.target.getAttribute("data-name");
+    var i = e.target.getAttribute("data-i");
+    fillChampionData({
+        ChampionLevel: --championInfo[name][i].level <= 1 ? championInfo[name][i].level = 1 : championInfo[name][i].level
+    }, name, i);
+    setStats(name, i);
+}
+
+function ChampionSetLevel18(e) {
+    var name = e.target.getAttribute("data-name");
+    var i = e.target.getAttribute("data-i");
+    fillChampionData({
+        ChampionLevel: championInfo[name][i].level = 18
+    }, name, i);
+    setStats(name, i);
 }
