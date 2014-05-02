@@ -3,7 +3,7 @@
 $name = $_REQUEST["name"];
 $i = $_REQUEST["i"];
 $title = $_REQUEST["title"];
-$version  = $_REQUEST["version"];
+$version = $_REQUEST["version"];
 $splash_file = $_REQUEST["splash"];
 $splash = "http://ddragon.leagueoflegends.com/cdn/$version/img/champion/$splash_file";
 
@@ -159,8 +159,24 @@ echo <<<EOT
 
         </div>
     </div>
+    <div class="ChampionInfoBlock FloatRight">
+        <span class="ChampionInfoHeading ChampionInfoSubHeading">Abilities</span>
+        <table class="AbilitiesDisplayTable">
+            <tr>
+                <td><img class="AbilityImage ChampionQImage" src=" " width="50px" height="50px"></img></td>
+                <td><img class="AbilityImage ChampionWImage" src=" " width="50px" height="50px"></img></td>
+                <td><img class="AbilityImage ChampionEImage" src=" " width="50px" height="50px"></img></td>
+                <td><img class="AbilityImage ChampionRImage" src=" " width="50px" height="50px"></img></td>
+            </tr>
+            <tr>
+            	<td class="ChampionAbilityStats ChampionQStats">Damage</td>
+            	<td class="ChampionAbilityStats ChampionWStats">Shield</td>
+            	<td class="ChampionAbilityStats ChampionEStats">Heal</td>
+            	<td class="ChampionAbilityStats ChampionRStats">Movespeed</td>
+            </tr>
+        </table>
+    </div>
 
 </div>
 EOT;
-
 ?>

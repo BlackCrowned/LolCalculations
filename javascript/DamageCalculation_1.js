@@ -29,7 +29,7 @@ $(document).ready(function() {
         key: "options",
         value: [{
             key: "champData",
-            value: "image,stats"
+            value: "image,stats,spells"
         }, {
             key: "region",
             value: "euw"
@@ -75,14 +75,16 @@ $(document).ready(function() {
                 runes: {},
                 masteries: {},
                 level: 1,
+                abilities: getAbilityData(champion),
                 championStats: getChampionData(champion),
                 stats: {}
             });
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
             $("#" + champion + i).children(1, 1).attr("data-name", champion).attr("data-i", i);
-            fillChampionData(championInfo[champion][i].stats, champion, i);
-            fillChampionData({
+            fillChampionInfo(championInfo[champion][i].stats, champion, i);
+            fillChampionInfo(championInfo[champion][i].abilities, champion, i);
+            fillChampionInfo({
                 ChampionLevel: championInfo[champion][i].level
             }, champion, i);
 
@@ -124,13 +126,53 @@ $(document).ready(function() {
     });
 });
 
-function fillChampionData(data, name, i) {
-    var id = name + i;
-    for (var i in data) {
-        $("#" + id).children(1).find({
-            className: i
-        }).text(Math.round(data[i] * 1000) / 1000);
+function fillChampionInfo(data, name, i) {
+    for (var c in data) {
+        if ( typeof data[c] === "string" && data[c].match(/http:\/\//g)) {
+            fillImageSource(data[c], c, name, i);
+        }
+        else if (typeof data[c] === "string") {
+            fillChampionText(data[c], c, name, i);
+        }
+        else {
+            fillChampionData(data[c], c, name, i);
+        }
     }
+}
+
+function fillChampionData(data, c, name, i) {
+    var id = name + i;
+    $("#" + id).children(1).find({
+        className: c
+    }).text(Math.round(data * 1000) / 1000);
+}
+
+function fillChampionText(data, c, name, i) {
+    var id = name + i;
+    $("#" + id).children(1).find({
+        className: c
+    }).text(data);
+}
+
+function fillImageSource(data, c, name, i) {
+    var id = name + i;
+    $("#" + id).children(1).find({
+        className: c
+    }).attr("src", data);
+}
+
+function getAbilityData(name) {
+    var data = {};
+
+    data.ChampionQImage = getImageUrl(version, champions[ids[name]].spells[0].image.group, champions[ids[name]].spells[0].image.full);
+    data.ChampionWImage = getImageUrl(version, champions[ids[name]].spells[1].image.group, champions[ids[name]].spells[1].image.full);
+    data.ChampionEImage = getImageUrl(version, champions[ids[name]].spells[2].image.group, champions[ids[name]].spells[2].image.full);
+    data.ChampionRImage = getImageUrl(version, champions[ids[name]].spells[3].image.group, champions[ids[name]].spells[3].image.full);
+    data.ChampionQStats = champions[ids[name]].spells[0].leveltip;
+    data.ChampionWStats = champions[ids[name]].spells[1].leveltip;
+    data.ChampionEStats = champions[ids[name]].spells[2].leveltip;
+    data.ChampionRStats = champions[ids[name]].spells[3].leveltip;
+    return data;
 }
 
 function getChampionData(name) {
@@ -190,7 +232,7 @@ function setStats(name, i) {
         }
 
     }
-    fillChampionData(championInfo[name][i].stats, name, i);
+    fillChampionInfo(championInfo[name][i].stats, name, i);
 }
 
 /*
@@ -215,7 +257,7 @@ function ChampionRemove(e) {
 function ChampionSetLevel1(e) {
     var name = e.target.getAttribute("data-name");
     var i = e.target.getAttribute("data-i");
-    fillChampionData({
+    fillChampionInfo({
         ChampionLevel: championInfo[name][i].level = 1
     }, name, i);
     setStats(name, i);
@@ -224,7 +266,7 @@ function ChampionSetLevel1(e) {
 function ChampionIncreaseLevel(e) {
     var name = e.target.getAttribute("data-name");
     var i = e.target.getAttribute("data-i");
-    fillChampionData({
+    fillChampionInfo({
         ChampionLevel: ++championInfo[name][i].level >= 18 ? championInfo[name][i].level = 18 : championInfo[name][i].level
     }, name, i);
     setStats(name, i);
@@ -233,7 +275,7 @@ function ChampionIncreaseLevel(e) {
 function ChampionDecreaseLevel(e) {
     var name = e.target.getAttribute("data-name");
     var i = e.target.getAttribute("data-i");
-    fillChampionData({
+    fillChampionInfo({
         ChampionLevel: --championInfo[name][i].level <= 1 ? championInfo[name][i].level = 1 : championInfo[name][i].level
     }, name, i);
     setStats(name, i);
@@ -242,8 +284,12 @@ function ChampionDecreaseLevel(e) {
 function ChampionSetLevel18(e) {
     var name = e.target.getAttribute("data-name");
     var i = e.target.getAttribute("data-i");
-    fillChampionData({
+    fillChampionInfo({
         ChampionLevel: championInfo[name][i].level = 18
     }, name, i);
     setStats(name, i);
+}
+
+function getImageUrl(version, group, file) {
+    return "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/" + group + "/" + file;
 }

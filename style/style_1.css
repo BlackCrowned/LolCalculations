@@ -216,6 +216,28 @@ h2 {
 	background-color: green;
 }
 
+.AbilitiesDisplayTable {
+	border: 1px solid black;
+	vertical-align: middle;
+	background: #4BADF5;
+}
+
+.AbilitiesDisplayTable td{
+	width: 100px;
+	border: 1px solid black;
+	'vertical-align: middle;
+	background: #4BADF5;
+}
+
+.ChampionAbilityStats {
+	font-size: 0.75em;
+	vertical-align: top;
+}
+
+.AbilityImage {
+	border: 2px double black;
+}
+
 a:link {
 	color: orange;
 	text-decoration: none;
