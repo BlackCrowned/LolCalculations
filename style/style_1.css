@@ -234,8 +234,36 @@ h2 {
 	vertical-align: top;
 }
 
+.ChampionAbilityStats span {
+	display: inline-block;
+	width: 18px;
+	height: 20px;
+	border: 1px solid black;
+}
+
 .AbilityImage {
 	border: 2px double black;
+}
+
+/*
+ ******************************************************************************
+ *******************************Hover Styles***********************************
+ ****************************************************************************** 
+ */
+
+.HoverDiv {
+	background-color: gray;
+	color: orange;
+	font-size: 0.6em;
+}
+
+.HoverDivContainer > * {
+	display: inline-block;
+}
+
+.HoverHeading {
+	text-decoration: underline;
+	font-weight: bold;
 }
 
 a:link {

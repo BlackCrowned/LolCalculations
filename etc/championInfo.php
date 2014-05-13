@@ -169,10 +169,10 @@ echo <<<EOT
                 <td><img class="AbilityImage ChampionRImage" src=" " width="50px" height="50px"></img></td>
             </tr>
             <tr>
-            	<td class="ChampionAbilityStats ChampionQStats">Damage</td>
-            	<td class="ChampionAbilityStats ChampionWStats">Shield</td>
-            	<td class="ChampionAbilityStats ChampionEStats">Heal</td>
-            	<td class="ChampionAbilityStats ChampionRStats">Movespeed</td>
+            	<td class="ChampionAbilityStats ChampionQStats"><span class="ChampionAbilityLevelQ1" value="false"></span><span class="ChampionAbilityLevelQ2" value="false"></span><span class="ChampionAbilityLevelQ3" value="false"></span><span class="ChampionAbilityLevelQ4" value="false"></span><span class="ChampionAbilityLevelQ5" value="false"></span></td>
+            	<td class="ChampionAbilityStats ChampionWStats"><span class="ChampionAbilityLevelW1" value="false"></span><span class="ChampionAbilityLevelW2" value="false"></span><span class="ChampionAbilityLevelW3" value="false"></span><span class="ChampionAbilityLevelW4" value="false"></span><span class="ChampionAbilityLevelW5" value="false"></span></td>
+            	<td class="ChampionAbilityStats ChampionEStats"><span class="ChampionAbilityLevelE1" value="false"></span><span class="ChampionAbilityLevelE2" value="false"></span><span class="ChampionAbilityLevelE3" value="false"></span><span class="ChampionAbilityLevelE4" value="false"></span><span class="ChampionAbilityLevelE5" value="false"></span></td>
+            	<td class="ChampionAbilityStats ChampionRStats"><span class="ChampionAbilityLevelR1" value="false"></span><span class="ChampionAbilityLevelR2" value="false"></span><span class="ChampionAbilityLevelR3" value="false"></span><span class="ChampionAbilityLevelR4" value="false"></span><span class="ChampionAbilityLevelR5" value="false"></span></td>
             </tr>
         </table>
     </div>

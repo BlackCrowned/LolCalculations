@@ -5,9 +5,14 @@ var ids = {};
 var itemInfo;
 
 $(document).ready(function() {
+    
+    $("#addChampList").hide("slow");
+    $("#addChampButton").hide("slow");
+        
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         championInfo = json;
         version = championInfo.version;
+        console.log("Champions:");
         console.log(championInfo);
         for (var i in championInfo.data) {
             champions[championInfo.data[i].id] = championInfo.data[i];
@@ -21,6 +26,8 @@ $(document).ready(function() {
         for (var i = 0; i < sorted.length; i++) {
             $("#addChampList").append("<option value='" + sorted[i][1] + "'>" + sorted[i][0] + "</option>");
         }
+
+        $("#addChampList").show("slow");
 
     }, [{
         key: "url",
@@ -39,6 +46,7 @@ $(document).ready(function() {
     });
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         itemInfo = json;
+        console.log("Items:");
         console.log(itemInfo);
     }, [{
         key: "url",
@@ -71,7 +79,7 @@ $(document).ready(function() {
             championInfo[champion].push({
                 id: id,
                 i: i,
-                items: {},
+                items: getItemsData({}, 3340, "ChampionTrinket"),
                 runes: {},
                 masteries: {},
                 level: 1,
@@ -84,6 +92,7 @@ $(document).ready(function() {
             $("#" + champion + i).children(1, 1).attr("data-name", champion).attr("data-i", i);
             fillChampionInfo(championInfo[champion][i].stats, champion, i);
             fillChampionInfo(championInfo[champion][i].abilities, champion, i);
+            fillChampionInfo(championInfo[champion][i].items, champion, i);
             fillChampionInfo({
                 ChampionLevel: championInfo[champion][i].level
             }, champion, i);
@@ -161,6 +170,16 @@ function fillImageSource(data, c, name, i) {
     }).attr("src", data);
 }
 
+function getItemsData(oldData, itemId, slotId) {
+    var data = oldData;
+    if (!data[slotId]) {
+        data[slotId] = {};
+    }
+    data[slotId] = getImageUrl(version, itemInfo.data[itemId].image.group, itemInfo.data[itemId].image.full);
+    
+    return data;
+}
+
 function getAbilityData(name) {
     var data = {};
 
@@ -168,10 +187,10 @@ function getAbilityData(name) {
     data.ChampionWImage = getImageUrl(version, champions[ids[name]].spells[1].image.group, champions[ids[name]].spells[1].image.full);
     data.ChampionEImage = getImageUrl(version, champions[ids[name]].spells[2].image.group, champions[ids[name]].spells[2].image.full);
     data.ChampionRImage = getImageUrl(version, champions[ids[name]].spells[3].image.group, champions[ids[name]].spells[3].image.full);
-    data.ChampionQStats = champions[ids[name]].spells[0].leveltip;
-    data.ChampionWStats = champions[ids[name]].spells[1].leveltip;
-    data.ChampionEStats = champions[ids[name]].spells[2].leveltip;
-    data.ChampionRStats = champions[ids[name]].spells[3].leveltip;
+    //data.ChampionQStats = champions[ids[name]].spells[0].leveltip;
+    //data.ChampionWStats = champions[ids[name]].spells[1].leveltip;
+    //data.ChampionEStats = champions[ids[name]].spells[2].leveltip;
+    //data.ChampionRStats = champions[ids[name]].spells[3].leveltip;
     return data;
 }
 
