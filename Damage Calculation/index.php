@@ -13,13 +13,13 @@
     <body>
         <h1>Damage Calculation</h1>
         <div class="Champions" id="addChampDiv">
-            <select class="Selectable listbox" id="addChampList" required="required"></select>
+            <select class="Selectable listbox" id="addChampList"></select>
             <button class="Selectable button" id="addChampButton">
                 Add Champion
             </button>
             <div class="Infobox" id="selectedChamps">
                 <span class="InfotextHeading">Selection</span>
-                
+
             </div>
         </div>
 

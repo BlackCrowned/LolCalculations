@@ -6,8 +6,8 @@ var itemInfo;
 
 $(document).ready(function() {
     
-    $("#addChampList").hide("slow");
-    $("#addChampButton").hide("slow");
+    $("#addChampList").hide(0);
+    $("#addChampButton").hide(0);
         
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         championInfo = json;
@@ -26,8 +26,8 @@ $(document).ready(function() {
         for (var i = 0; i < sorted.length; i++) {
             $("#addChampList").append("<option value='" + sorted[i][1] + "'>" + sorted[i][0] + "</option>");
         }
-
         $("#addChampList").show("slow");
+        $("#addChampButton").show("slow");
 
     }, [{
         key: "url",
