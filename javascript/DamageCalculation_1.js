@@ -5,10 +5,10 @@ var ids = {};
 var itemInfo;
 
 $(document).ready(function() {
-    
+
     $("#addChampList").hide(0);
     $("#addChampButton").hide(0);
-        
+
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         championInfo = json;
         version = championInfo.version;
@@ -26,8 +26,8 @@ $(document).ready(function() {
         for (var i = 0; i < sorted.length; i++) {
             $("#addChampList").append("<option value='" + sorted[i][1] + "'>" + sorted[i][0] + "</option>");
         }
-        $("#addChampList").show("slow");
-        $("#addChampButton").show("slow");
+        $("#addChampList").slideDown("slow");
+        $("#addChampButton").slideDown("slow");
 
     }, [{
         key: "url",
@@ -140,7 +140,7 @@ function fillChampionInfo(data, name, i) {
         if ( typeof data[c] === "string" && data[c].match(/http:\/\//g)) {
             fillImageSource(data[c], c, name, i);
         }
-        else if (typeof data[c] === "string") {
+        else if ( typeof data[c] === "string") {
             fillChampionText(data[c], c, name, i);
         }
         else {
@@ -176,7 +176,7 @@ function getItemsData(oldData, itemId, slotId) {
         data[slotId] = {};
     }
     data[slotId] = getImageUrl(version, itemInfo.data[itemId].image.group, itemInfo.data[itemId].image.full);
-    
+
     return data;
 }
 
@@ -263,13 +263,8 @@ function setStats(name, i) {
 function ChampionRemove(e) {
     var name = e.target.getAttribute("data-name");
     var i = e.target.getAttribute("data-i");
-    $("#" + name + i).anim({
-        opacity: 0,
-        callbacks: {
-            done: function(elem) {
-                elem.parentNode.removeChild(elem);
-            }
-        }
+    $("#" + name + i).fadeOut("slow", "", function(elem) {
+        elem.parentNode.removeChild(elem);
     });
 }
 
