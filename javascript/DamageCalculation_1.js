@@ -89,7 +89,7 @@ $(document).ready(function() {
             });
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
-            $("#" + champion + i).children(1, 1).attr("data-name", champion).attr("data-i", i);
+            $("#" + id).children(1, 1).attr("data-name", champion).attr("data-i", i);
             fillChampionInfo(championInfo[champion][i].stats, champion, i);
             fillChampionInfo(championInfo[champion][i].abilities, champion, i);
             fillChampionInfo(championInfo[champion][i].items, champion, i);
@@ -112,6 +112,9 @@ $(document).ready(function() {
             $("#" + id).children(1).find({
                 className: "ChampionSetlevel18"
             }).click(ChampionSetLevel18);
+            $("#" + id).children(1, 1).find({
+                className: "ItemImage"
+            }).Tooltip("../etc/itemHover.php");
 
         }, [{
             key: "name",
@@ -263,7 +266,7 @@ function setStats(name, i) {
 function ChampionRemove(e) {
     var name = e.target.getAttribute("data-name");
     var i = e.target.getAttribute("data-i");
-    $("#" + name + i).fadeOut("slow", "", function(elem) {
+    $("#" + name + i).fadeOut("fast", "", function(elem) {
         elem.parentNode.removeChild(elem);
     });
 }
