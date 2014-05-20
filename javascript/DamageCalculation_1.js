@@ -87,6 +87,15 @@ $(document).ready(function() {
                 championStats: getChampionData(champion),
                 stats: {}
             });
+            
+            //TEst
+            championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem1");
+            championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem2");
+            championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem3");
+            championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem4");
+            championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem5");
+            championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem6");
+            
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
             $("#" + id).children(1, 1).attr("data-name", champion).attr("data-i", i);
