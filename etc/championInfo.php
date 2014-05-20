@@ -42,6 +42,13 @@ echo <<<EOT
                     <td><img class="ItemImage ChampionItem6" src="" height="50px" width="50px"/></td>
                 </tr>
             </table>
+            <div class="ChampionItem1Tooltip"></div>
+            <div class="ChampionItem2Tooltip"></div>
+            <div class="ChampionItem3Tooltip"></div>
+            <div class="ChampionItem4Tooltip"></div>
+            <div class="ChampionItem5Tooltip"></div>
+            <div class="ChampionItem6Tooltip"></div>
+            <div class="ChampionTrinketTooltip"></div>
         </div>
         <div class="ChampionInfoBlock">
             <span class="ChampionInfoHeading ChampionInfoSubHeading ChampionRunesHeading"> Runes </span>

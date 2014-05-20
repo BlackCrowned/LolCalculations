@@ -1,22 +1,36 @@
-<div class="HoverDiv ItemHoverDiv">
-    <div class="HoverDivContainer">
-        <!-- Builds into -->
+<?php
+
+$name = $_REQUEST["name"];
+$gold = $_REQUEST["gold"];
+$stats = $_REQUEST["stats"];
+$passives = json_decode($_REQUEST["passives"]);
+$description = $_REQUEST["description"];
+$version = $_REQUEST["version"];
+$image_file = $_REQUEST["image"];
+$image = "http://ddragon.leagueoflegends.com/cdn/$version/img/item/$image_file";
+
+echo <<<EOT
+<div class="Tooltip ItemTooltip">
+    <!-- Image, Name, Gold -->
+    <div class="TooltipBlock TooltipContainer">
+        <img class="TooltipImage ItemTooltipImage" src="$image" width="25px" height="25px" />
+        <div class="TooltipBlock">
+            <span class="TooltipHeading ItemTooltipHeading">$name</span>
+            <br />
+            <span class="">Gold: </span><span class="ItemTooltipGold">$gold</span>
+        </div>
+
     </div>
-    <div class="HoverDivContainer">
-        <img class="HoverImage ItemHoverImage" src="" width="25px" height="25px" />
-        <span class="HoverHeading ItemHoverHeading">Item Name</span>
+    <!-- Stats -->
+    <div class="TooltipBlock">
+        <span class="ItemTooltipStatName">Stat: </span><span class="ItemTooltipStatValue">9000</span>
     </div>
-    <table class="ItemHoverStatsTable">
-        <tr>
-            <td>Name #1</td>
-            <td>Value #1</td>
-        </tr>
-        <tr>
-            <td>Name #2</td>
-            <td>Value #2</td>
-        </tr>
-    </table>
-    <div class="HoverDivContainer">
-        <!-- Builds from -->
+    <!-- Passives + Description -->
+    <div class="TooltipBlock">
+        <span class="ItemTooltipPassiveType">UNIQUE Passive: </span><span class="ItemTooltipPassiveDescription">Oneshot Everybody</span>
+        <br />
+        <span class="ItemTooltipDescription">$description</span>
     </div>
 </div>
+EOT;
+?>

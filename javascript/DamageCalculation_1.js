@@ -114,7 +114,7 @@ $(document).ready(function() {
             }).click(ChampionSetLevel18);
             $("#" + id).children(1, 1).find({
                 className: "ItemImage"
-            }).Tooltip("../etc/itemHover.php");
+            }).Tooltip("../etc/itemHover.php?name=Blood Thirster&gold=3200&stats=0&passives=0&description=It thirsts for blood!&version=4.7.9&image=3072.png");
 
         }, [{
             key: "name",

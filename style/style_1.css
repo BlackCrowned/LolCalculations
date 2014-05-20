@@ -27,6 +27,7 @@ h2 {
 	margin: 20px;
 	padding: 20px;
 }
+
 .Selectable {
 	display: inline-block;
 	background-color: white;
@@ -247,23 +248,61 @@ h2 {
 
 /*
  ******************************************************************************
- *******************************Hover Styles***********************************
+ *******************************Tooltip Styles*********************************
  ****************************************************************************** 
  */
 
-.HoverDiv {
+.Tooltip {
 	background-color: gray;
-	color: orange;
+	color: blue;
 	font-size: 0.6em;
+	border: 1px solid black;
+	text-align: left;
 }
 
-.HoverDivContainer > * {
+.TooltipContainer > * {
 	display: inline-block;
+	vertical-align: text-top;
 }
 
-.HoverHeading {
+.TooltipBlock {
+	'border: 1px solid black;
+	vertical-align: text-top;
+}
+
+.TooltipHeading {
 	text-decoration: underline;
 	font-weight: bold;
+}
+
+.TooltipSubHeading {
+	font-style: italic;
+}
+
+.ItemTooltipImage {
+	border: 1px double black;
+}
+
+.ItemTooltipStatName {
+	font-weight: bold;
+	color: yellow;
+}
+
+.ItemTooltipStatValue {
+	color: yellow;
+}
+
+.ItemTooltipPassiveType {
+	font-weight: bold;
+	color: purple;
+}
+
+.ItemTooltipPassiveDescription {
+	color: purple;
+}
+
+.ItemTooltipDescription {
+	color: white;
 }
 
 a:link {
