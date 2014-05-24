@@ -16,7 +16,7 @@ $(document).ready(function() {
         console.log(championInfo);
         for (var i in championInfo.data) {
             champions[championInfo.data[i].id] = championInfo.data[i];
-            ids[championInfo.data[i].name] = championInfo.data[i].id;
+            ids[championInfo.data[i].key] = championInfo.data[i].id;
         }
         var sorted = [];
         for (var i in ids) {
@@ -24,7 +24,7 @@ $(document).ready(function() {
         }
         sorted.sort();
         for (var i = 0; i < sorted.length; i++) {
-            $("#addChampList").append("<option value='" + sorted[i][1] + "'>" + sorted[i][0] + "</option>");
+            $("#addChampList").append("<option value='" + sorted[i][1] + "'>" + champions[sorted[i][1]].name + "</option>");
         }
         $("#addChampList").slideDown("slow");
         $("#addChampButton").slideDown("slow");
@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
 
     $("#addChampButton").click(function(e) {
-        var champ = champions[$("#addChampList").find({tag: "option"})[$("#addChampList")[0].selectedIndex].value].name;
+        var champ = champions[$("#addChampList").find({tag: "option"})[$("#addChampList")[0].selectedIndex].value].key;
         if (!championInfo[champ]) {
             championInfo[champ] = [];
         }
