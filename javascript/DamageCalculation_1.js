@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
 
     $("#addChampButton").click(function(e) {
-        var champ = champions[$("#addChampList").find({tag: "option"})[$("#addChampList")[0].selectedIndex].value].key;
+        var champ = champions[$("#addChampList option")[$("#addChampList")[0].selectedIndex].value].key;
         if (!championInfo[champ]) {
             championInfo[champ] = [];
         }
@@ -106,24 +106,12 @@ $(document).ready(function() {
                 ChampionLevel: championInfo[champion][i].level
             }, champion, i);
 
-            $("#" + id).children(1).find({
-                className: "ChampionRemove"
-            }).click(ChampionRemove);
-            $("#" + id).children(1).find({
-                className: "ChampionSetlevel1"
-            }).click(ChampionSetLevel1);
-            $("#" + id).children(1).find({
-                className: "ChampionSetlevelp1"
-            }).click(ChampionIncreaseLevel);
-            $("#" + id).children(1).find({
-                className: "ChampionSetlevelm1"
-            }).click(ChampionDecreaseLevel);
-            $("#" + id).children(1).find({
-                className: "ChampionSetlevel18"
-            }).click(ChampionSetLevel18);
-            $("#" + id).children(1, 1).find({
-                className: "ItemImage"
-            }).Tooltip("url:../etc/itemHover.php?name=Blood Thirster&gold=3200&stats=0&passives=0&description=It thirsts for blood!&version=4.7.9&image=3072.png");
+            $("#" + id + " .ChampionRemove").click(ChampionRemove);
+            $("#" + id + " .ChampionSetlevel1").click(ChampionSetLevel1);
+            $("#" + id + " .ChampionSetlevelp1").click(ChampionIncreaseLevel);
+            $("#" + id + " .ChampionSetlevelm1").click(ChampionDecreaseLevel);
+            $("#" + id + " .ChampionSetlevel18").click(ChampionSetLevel18);
+            $("#" + id + " .ItemImage").Tooltip("url:../etc/itemHover.php?name=Blood Thirster&gold=3200&stats=0&passives=0&description=It thirsts for blood!&version=4.7.9&image=3072.png");
 
         }, [{
             key: "name",
@@ -163,23 +151,17 @@ function fillChampionInfo(data, name, i) {
 
 function fillChampionData(data, c, name, i) {
     var id = name + i;
-    $("#" + id).children(1).find({
-        className: c
-    }).text(Math.round(data * 1000) / 1000);
+    $("#" + id + " ." + c).text(Math.round(data * 1000) / 1000);
 }
 
 function fillChampionText(data, c, name, i) {
     var id = name + i;
-    $("#" + id).children(1).find({
-        className: c
-    }).text(data);
+    $("#" + id + " ." + c).text(data);
 }
 
 function fillImageSource(data, c, name, i) {
     var id = name + i;
-    $("#" + id).children(1).find({
-        className: c
-    }).attr("src", data);
+    $("#" + id + " ." + c).attr("src", data);
 }
 
 function getItemsData(oldData, itemId, slotId) {
