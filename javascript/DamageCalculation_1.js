@@ -29,31 +29,25 @@ $(document).ready(function() {
         $("#addChampList").slideDown("slow");
         $("#addChampButton").slideDown("slow");
 
-    }, [{
-        key: "url",
-        value: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/champion"
     }, {
-        key: "options",
-        value: [{
+        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
+        options: [{
             key: "champData",
             value: "image,stats,spells"
         }, {
             key: "region",
             value: "euw"
         }]
-    }], {
+    }, {
         content: "json",
     });
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         itemInfo = json;
         console.log("Items:");
         console.log(itemInfo);
-    }, [{
-        key: "url",
-        value: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/item"
     }, {
-        key: "options",
-        value: [{
+        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/item",
+        options: [{
             key: "itemListData",
             //value: "from,gold,image,into,maps,requiredChampion,stats,tags,tree"
             value: "all"
@@ -61,7 +55,7 @@ $(document).ready(function() {
             key: "region",
             value: "euw"
         }]
-    }], {
+    }, {
         content: "json",
     });
 
@@ -83,11 +77,12 @@ $(document).ready(function() {
                 runes: {},
                 masteries: {},
                 level: 1,
+                tooltips: setTooltipData({}, 3340, "ChampionTrinketTooltip"),
                 abilities: getAbilityData(champion),
                 championStats: getChampionData(champion),
                 stats: {}
             });
-            
+
             //TEst
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem1");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem2");
@@ -95,7 +90,7 @@ $(document).ready(function() {
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem4");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem5");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem6");
-            
+
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
             $("#" + id).children(1, 1).attr("data-name", champion).attr("data-i", i);
@@ -105,30 +100,26 @@ $(document).ready(function() {
             fillChampionInfo({
                 ChampionLevel: championInfo[champion][i].level
             }, champion, i);
+            fillChampionInfo(championInfo[champion][i].tooltips, champion, i);
 
             $("#" + id + " .ChampionRemove").click(ChampionRemove);
             $("#" + id + " .ChampionSetlevel1").click(ChampionSetLevel1);
             $("#" + id + " .ChampionSetlevelp1").click(ChampionIncreaseLevel);
             $("#" + id + " .ChampionSetlevelm1").click(ChampionDecreaseLevel);
             $("#" + id + " .ChampionSetlevel18").click(ChampionSetLevel18);
-            $("#" + id + " .ItemImage").Tooltip("url:../etc/itemHover.php?name=Blood Thirster&gold=3200&stats=0&passives=0&description=It thirsts for blood!&version=4.7.9&image=3072.png");
+            //$("#" + id + "
+            // .ItemImage").Tooltip("url:../etc/itemHover.php?name=Blood
+            // Thirster&gold=3200&stats=0&passives=0&description=It thirsts for
+            // blood!&version=4.7.9&image=3072.png");
+            $("#" + id + " .ItemImage").Tooltip("ChampionTrinketTooltip");
 
-        }, [{
-            key: "name",
-            value: champ
         }, {
-            key: "i",
-            value: i
+            name: champ,
+            i: i,
+            title: champions[ids[champ]].title,
+            version: version,
+            splash: champions[ids[champ]].image.full
         }, {
-            key: "title",
-            value: champions[ids[champ]].title
-        }, {
-            key: "version",
-            value: championInfo.version
-        }, {
-            key: "splash",
-            value: champions[ids[champ]].image.full
-        }], {
             args: champ,
             content: "text",
         });
@@ -137,14 +128,18 @@ $(document).ready(function() {
 
 function fillChampionInfo(data, name, i) {
     for (var c in data) {
-        if ( typeof data[c] === "string" && data[c].match(/http:\/\//g)) {
+        if ( typeof data[c] === "string" && data[c].match(/^url:/)) {
+            data[c] = data[c].replace(/url:/, "");
             fillImageSource(data[c], c, name, i);
         }
         else if ( typeof data[c] === "string") {
             fillChampionText(data[c], c, name, i);
         }
-        else {
+        else if ( typeof data[c] === "number") {
             fillChampionData(data[c], c, name, i);
+        }
+        else if ( typeof data[c] === "object") {
+            fillElemAjax(data[c], c, name, i);
         }
     }
 }
@@ -164,12 +159,19 @@ function fillImageSource(data, c, name, i) {
     $("#" + id + " ." + c).attr("src", data);
 }
 
+function fillElemAjax(data, c, name, i) {
+    var id = name + i;
+    $("#" + id + " ." + c).load(data.url, data.header, {
+        method: "post"
+    });
+};
+
 function getItemsData(oldData, itemId, slotId) {
     var data = oldData;
     if (!data[slotId]) {
         data[slotId] = {};
     }
-    data[slotId] = getImageUrl(version, itemInfo.data[itemId].image.group, itemInfo.data[itemId].image.full);
+    data[slotId] = "url:" + getImageUrl(version, itemInfo.data[itemId].image.group, itemInfo.data[itemId].image.full);
 
     return data;
 }
@@ -177,10 +179,10 @@ function getItemsData(oldData, itemId, slotId) {
 function getAbilityData(name) {
     var data = {};
 
-    data.ChampionQImage = getImageUrl(version, champions[ids[name]].spells[0].image.group, champions[ids[name]].spells[0].image.full);
-    data.ChampionWImage = getImageUrl(version, champions[ids[name]].spells[1].image.group, champions[ids[name]].spells[1].image.full);
-    data.ChampionEImage = getImageUrl(version, champions[ids[name]].spells[2].image.group, champions[ids[name]].spells[2].image.full);
-    data.ChampionRImage = getImageUrl(version, champions[ids[name]].spells[3].image.group, champions[ids[name]].spells[3].image.full);
+    data.ChampionQImage = "url:" + getImageUrl(version, champions[ids[name]].spells[0].image.group, champions[ids[name]].spells[0].image.full);
+    data.ChampionWImage = "url:" + getImageUrl(version, champions[ids[name]].spells[1].image.group, champions[ids[name]].spells[1].image.full);
+    data.ChampionEImage = "url:" + getImageUrl(version, champions[ids[name]].spells[2].image.group, champions[ids[name]].spells[2].image.full);
+    data.ChampionRImage = "url:" + getImageUrl(version, champions[ids[name]].spells[3].image.group, champions[ids[name]].spells[3].image.full);
     //data.ChampionQStats = champions[ids[name]].spells[0].leveltip;
     //data.ChampionWStats = champions[ids[name]].spells[1].leveltip;
     //data.ChampionEStats = champions[ids[name]].spells[2].leveltip;
@@ -229,6 +231,35 @@ function getChampionData(name) {
 
     return data;
 }
+
+function setTooltipData(oldData, itemId, slotId) {
+    var data = oldData;
+    if (!data[slotId]) {
+        data[slotId] = {};
+    }
+
+    var name = itemInfo.data[itemId].name;
+    var gold = itemInfo.data[itemId].gold.total;
+    var stats = itemInfo.data[itemId].stats;
+    var passives = "not available";
+    var description = itemInfo.data[itemId].description;
+    var image = itemInfo.data[itemId].image.full;
+
+    data[slotId] = {
+        url: "../etc/itemHover.php",
+        header: {
+            name: name,
+            gold: gold,
+            stats: stats,
+            passives: passives,
+            description: description,
+            version: version,
+            image: image,
+        }
+    };
+
+    return data;
+};
 
 function setStats(name, i) {
     for (var j in championInfo[name][i].championStats) {
