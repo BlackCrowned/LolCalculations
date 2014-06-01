@@ -283,26 +283,26 @@ h2 {
 	border: 1px double black;
 }
 
-.ItemTooltipStatName {
-	font-weight: bold;
+
+stats {
 	color: yellow;
 }
 
-.ItemTooltipStatValue {
-	color: yellow;
+unique:before {
+	content: "UNIQUE ";
 }
 
-.ItemTooltipPassiveType {
+unique {
 	font-weight: bold;
-	color: purple;
+	color: orange;
 }
 
-.ItemTooltipPassiveDescription {
-	color: purple;
+grouplimit {
+	color:red;
 }
 
 .ItemTooltipDescription {
-	color: white;
+	color: black;
 }
 
 a:link {

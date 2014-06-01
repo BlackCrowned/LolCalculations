@@ -77,7 +77,7 @@ $(document).ready(function() {
                 runes: {},
                 masteries: {},
                 level: 1,
-                tooltips: setTooltipData({}, 3340, "ChampionTrinketTooltip"),
+                tooltips: getTooltipData({}, 3340, "ChampionTrinketTooltip"),
                 abilities: getAbilityData(champion),
                 championStats: getChampionData(champion),
                 stats: {}
@@ -90,6 +90,12 @@ $(document).ready(function() {
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem4");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem5");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem6");
+            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem1Tooltip");
+            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem2Tooltip");
+            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem3Tooltip");
+            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem4Tooltip");
+            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem5Tooltip");
+            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem6Tooltip");
 
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
@@ -107,11 +113,13 @@ $(document).ready(function() {
             $("#" + id + " .ChampionSetlevelp1").click(ChampionIncreaseLevel);
             $("#" + id + " .ChampionSetlevelm1").click(ChampionDecreaseLevel);
             $("#" + id + " .ChampionSetlevel18").click(ChampionSetLevel18);
-            //$("#" + id + "
-            // .ItemImage").Tooltip("url:../etc/itemHover.php?name=Blood
-            // Thirster&gold=3200&stats=0&passives=0&description=It thirsts for
-            // blood!&version=4.7.9&image=3072.png");
-            $("#" + id + " .ItemImage").Tooltip("ChampionTrinketTooltip");
+            $("#" + id + " .ChampionItem1").Tooltip("#" + id + " .ChampionItem1Tooltip");
+            $("#" + id + " .ChampionItem2").Tooltip("#" + id + " .ChampionItem2Tooltip");
+            $("#" + id + " .ChampionItem3").Tooltip("#" + id + " .ChampionItem3Tooltip");
+            $("#" + id + " .ChampionItem4").Tooltip("#" + id + " .ChampionItem4Tooltip");
+            $("#" + id + " .ChampionItem5").Tooltip("#" + id + " .ChampionItem5Tooltip");
+            $("#" + id + " .ChampionItem6").Tooltip("#" + id + " .ChampionItem6Tooltip");
+            $("#" + id + " .ChampionTrinket").Tooltip("#" + id + " .ChampionTrinketTooltip");
 
         }, {
             name: champ,
@@ -162,7 +170,8 @@ function fillImageSource(data, c, name, i) {
 function fillElemAjax(data, c, name, i) {
     var id = name + i;
     $("#" + id + " ." + c).load(data.url, data.header, {
-        method: "post"
+        method: "post",
+        async: false,
     });
 };
 
@@ -232,7 +241,7 @@ function getChampionData(name) {
     return data;
 }
 
-function setTooltipData(oldData, itemId, slotId) {
+function getTooltipData(oldData, itemId, slotId) {
     var data = oldData;
     if (!data[slotId]) {
         data[slotId] = {};
@@ -240,8 +249,6 @@ function setTooltipData(oldData, itemId, slotId) {
 
     var name = itemInfo.data[itemId].name;
     var gold = itemInfo.data[itemId].gold.total;
-    var stats = itemInfo.data[itemId].stats;
-    var passives = "not available";
     var description = itemInfo.data[itemId].description;
     var image = itemInfo.data[itemId].image.full;
 
@@ -250,8 +257,6 @@ function setTooltipData(oldData, itemId, slotId) {
         header: {
             name: name,
             gold: gold,
-            stats: stats,
-            passives: passives,
             description: description,
             version: version,
             image: image,

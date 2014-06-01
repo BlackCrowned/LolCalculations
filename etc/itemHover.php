@@ -2,8 +2,6 @@
 
 $name = $_REQUEST["name"];
 $gold = $_REQUEST["gold"];
-$stats = $_REQUEST["stats"];
-$passives = json_decode($_REQUEST["passives"]);
 $description = $_REQUEST["description"];
 $version = $_REQUEST["version"];
 $image_file = $_REQUEST["image"];
@@ -21,14 +19,8 @@ echo <<<EOT
         </div>
 
     </div>
-    <!-- Stats -->
+    <!-- Description -->
     <div class="TooltipBlock">
-        <span class="ItemTooltipStatName">Stat: </span><span class="ItemTooltipStatValue">9000</span>
-    </div>
-    <!-- Passives + Description -->
-    <div class="TooltipBlock">
-        <span class="ItemTooltipPassiveType">UNIQUE Passive: </span><span class="ItemTooltipPassiveDescription">Oneshot Everybody</span>
-        <br />
         <span class="ItemTooltipDescription">$description</span>
     </div>
 </div>
