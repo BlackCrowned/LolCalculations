@@ -30,10 +30,10 @@ $(document).ready(function() {
         $("#addChampButton").slideDown("slow");
 
     }, {
-        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
+        url: "https://euw.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
         options: [{
             key: "champData",
-            value: "image,stats,spells"
+            value: "image,stats,spells,passive"
         }, {
             key: "region",
             value: "euw"
@@ -46,7 +46,7 @@ $(document).ready(function() {
         console.log("Items:");
         console.log(itemInfo);
     }, {
-        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/item",
+        url: "https://euw.api.pvp.net/api/lol/static-data/euw/v1.2/item",
         options: [{
             key: "itemListData",
             //value: "from,gold,image,into,maps,requiredChampion,stats,tags,tree"
@@ -146,6 +146,9 @@ function fillChampionInfo(data, name, i) {
         else if ( typeof data[c] === "number") {
             fillChampionData(data[c], c, name, i);
         }
+        else if (data[c] instanceof Node) {
+            fillChampionElem(data[c], c, name, i);
+        }
         else if ( typeof data[c] === "object") {
             fillElemAjax(data[c], c, name, i);
         }
@@ -165,6 +168,11 @@ function fillChampionText(data, c, name, i) {
 function fillImageSource(data, c, name, i) {
     var id = name + i;
     $("#" + id + " ." + c).attr("src", data);
+}
+
+function fillChampionElem(data, c, name, i) {
+    var id = name + i;
+    $("#" + id + " ." + c).html("").append(data);
 }
 
 function fillElemAjax(data, c, name, i) {
@@ -188,14 +196,16 @@ function getItemsData(oldData, itemId, slotId) {
 function getAbilityData(name) {
     var data = {};
 
+    data.ChampionPImage = "url:" + getImageUrl(version, champions[ids[name]].passive.image.group, champions[ids[name]].passive.image.full);
     data.ChampionQImage = "url:" + getImageUrl(version, champions[ids[name]].spells[0].image.group, champions[ids[name]].spells[0].image.full);
     data.ChampionWImage = "url:" + getImageUrl(version, champions[ids[name]].spells[1].image.group, champions[ids[name]].spells[1].image.full);
     data.ChampionEImage = "url:" + getImageUrl(version, champions[ids[name]].spells[2].image.group, champions[ids[name]].spells[2].image.full);
     data.ChampionRImage = "url:" + getImageUrl(version, champions[ids[name]].spells[3].image.group, champions[ids[name]].spells[3].image.full);
-    //data.ChampionQStats = champions[ids[name]].spells[0].leveltip;
-    //data.ChampionWStats = champions[ids[name]].spells[1].leveltip;
-    //data.ChampionEStats = champions[ids[name]].spells[2].leveltip;
-    //data.ChampionRStats = champions[ids[name]].spells[3].leveltip;
+    data.ChampionPLevel = setSkillsLevelBar(name, "ChampionPLevel", 1);
+    data.ChampionQLevel = setSkillsLevelBar(name, "ChampionQLevel", 3);
+    data.ChampionWLevel = setSkillsLevelBar(name, "ChampionWLevel", 1);
+    data.ChampionELevel = setSkillsLevelBar(name, "ChampionELevel", 1);
+    data.ChampionRLevel = setSkillsLevelBar(name, "ChampionRLevel", 1);
     return data;
 }
 
@@ -283,6 +293,44 @@ function setStats(name, i) {
     }
     fillChampionInfo(championInfo[name][i].stats, name, i);
 }
+
+function setSkillsLevelBar(name, abilityId, level) {
+    //TODO
+    var maxrank;
+    var spellId;
+    var elem;
+
+    if (abilityId == "ChampionPLevel") {
+        maxrank = 1;
+        spellId = 0;
+    }
+    else {
+        switch (abilityId) {
+            case "ChampionQLevel":
+                spellId = 0;
+                break;
+            case "ChampionWLevel":
+                spellId = 1;
+                break;
+            case "ChampionELevel":
+                spellId = 2;
+                break;
+            case "ChampionRLevel":
+                spellId = 3;
+        }
+        maxrank = champions[ids[name]].spells[spellId].maxrank;
+    }
+    
+    elem = $("<div></div>");
+    var width = 1 / maxrank * 100;
+    for (var i = 0; i < level; i++) {
+        elem = $(elem).append("<span class='ChampionAbilityLevel' data-champion-ability-set='true' style='width:" + width + "%;'></span>");
+    }
+    for (var i = 0; i < (maxrank - level); i++) {
+        elem = $(elem).append("<span class='ChampionAbilityLevel' data-champion-ability-set='false' style='width:" + width + "%;'></span>");
+    }
+    return elem[0];
+};
 
 /*
  ******************************************************************************

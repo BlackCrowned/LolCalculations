@@ -235,11 +235,16 @@ h2 {
 	vertical-align: top;
 }
 
-.ChampionAbilityStats span {
+.ChampionAbilityLevel[data-champion-ability-set=false]{
 	display: inline-block;
-	width: 18px;
 	height: 20px;
-	border: 1px solid black;
+	outline: 1px solid black;
+}
+.ChampionAbilityLevel[data-champion-ability-set=true]{
+	display: inline-block;
+	background-color: orange;
+	height: 20px;
+	outline: 1px solid black;
 }
 
 .AbilityImage {
