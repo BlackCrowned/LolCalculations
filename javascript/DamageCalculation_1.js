@@ -30,7 +30,7 @@ $(document).ready(function() {
         $("#addChampButton").slideDown("slow");
 
     }, {
-        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
+        url: "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
         options: [{
             key: "champData",
             value: "image,stats,spells,passive"
@@ -46,7 +46,7 @@ $(document).ready(function() {
         console.log("Items:");
         console.log(itemInfo);
     }, {
-        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/item",
+        url: "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/item",
         options: [{
             key: "itemListData",
             //value: "from,gold,image,into,maps,requiredChampion,stats,tags,tree"
@@ -79,7 +79,7 @@ $(document).ready(function() {
                 level: 1,
                 abilityLevel: getAbilityLevelData(champion),
                 itemTooltips: getItemTooltipData({}, 3340, "ChampionTrinketTooltip"),
-                abilityTooltips: getAbilityTooltipData({}, 0, "ChampionQTooltip"),
+                abilityTooltips: getAbilityTooltipData({}, "P", "ChampionPTooltip", champion),
                 abilities: getAbilityData(champion),
                 championStats: getChampionData(champion),
                 stats: {}
@@ -98,6 +98,10 @@ $(document).ready(function() {
             championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem4Tooltip");
             championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem5Tooltip");
             championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem6Tooltip");
+            championInfo[champion][i].abilityTooltips = getAbilityTooltipData(championInfo[champion][i].abilityTooltips, "Q", "ChampionQTooltip", champion);
+            championInfo[champion][i].abilityTooltips = getAbilityTooltipData(championInfo[champion][i].abilityTooltips, "W", "ChampionWTooltip", champion);
+            championInfo[champion][i].abilityTooltips = getAbilityTooltipData(championInfo[champion][i].abilityTooltips, "E", "ChampionETooltip", champion);
+            championInfo[champion][i].abilityTooltips = getAbilityTooltipData(championInfo[champion][i].abilityTooltips, "R", "ChampionRTooltip", champion);
 
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
@@ -125,9 +129,12 @@ $(document).ready(function() {
             $("#" + id + " .ChampionItem5").Tooltip("#" + id + " .ChampionItem5Tooltip");
             $("#" + id + " .ChampionItem6").Tooltip("#" + id + " .ChampionItem6Tooltip");
             $("#" + id + " .ChampionTrinket").Tooltip("#" + id + " .ChampionTrinketTooltip");
+            $("#" + id + " .ChampionPImage").Tooltip("#" + id + " .ChampionPTooltip");
+            $("#" + id + " .ChampionQImage").Tooltip("#" + id + " .ChampionQTooltip");
+            $("#" + id + " .ChampionWImage").Tooltip("#" + id + " .ChampionWTooltip");
+            $("#" + id + " .ChampionEImage").Tooltip("#" + id + " .ChampionETooltip");
+            $("#" + id + " .ChampionRImage").Tooltip("#" + id + " .ChampionRTooltip");
             
-            //Test
-            $("#" + id + " .AbilityImage").Tooltip("#" + id + " .ChampionQTooltip");
 
         }, {
             name: champ,
@@ -300,22 +307,69 @@ function getItemTooltipData(oldData, itemId, slotId) {
     return data;
 };
 
-function getAbilityTooltipData(oldData, name, abilityId) {
+function getAbilityTooltipData(oldData, abilityName, slotId, championName) {
     var data = oldData;
-    if (!data[abilityId]) {
-        data[abilityId] = {};
+    if (!data[slotId]) {
+        data[slotId] = {};
     }
-    
+
+    var passive;
+    var abilityId;
+    switch(abilityName) {
+        case "P":
+        case "Passive":
+            passive = 1;
+            abilityId = -1;
+            abilityName = "Passive";
+            break;
+        case "Q":
+            passive = 0;
+            abilityId = 0;
+            break;
+        case "W":
+            passive = 0;
+            abilityId = 1;
+            break;
+        case "E":
+            passive = 0;
+            abilityId = 2;
+            break;
+        case "R":
+            passive = 0;
+            abilityId = 3;
+            break;
+    }
+
     var name;
     var description;
     var cooldown;
     var cost;
     var details;
-    var version;
     var image;
-    var passive;
-    
-    data[abilityId] = {
+
+    if (passive == 1) {
+        name = champions[ids[championName]].passive.name;
+        description = champions[ids[championName]].passive.description;
+        cooldown = champions[ids[championName]].passive.cooldownBurn;
+        cost = "No cost";
+        details = "";
+        image = champions[ids[championName]].passive.image.full;
+    }
+    else {
+        name = champions[ids[championName]].spells[abilityId].name;
+        description = champions[ids[championName]].spells[abilityId].description;
+        cooldown = champions[ids[championName]].spells[abilityId].cooldownBurn;
+        if (champions[ids[championName]].spells[abilityId].costBurn == 0) {
+            cost = "No cost";
+        }
+        else {
+            cost = champions[ids[championName]].spells[abilityId].costBurn + " " + champions[ids[championName]].spells[abilityId].costType;
+        }
+        details = "";
+        image = champions[ids[championName]].spells[abilityId].image.full;
+    }
+
+    data[slotId] = {
         url: "../etc/abilityTooltip.php",
         header: {
             name: name,
@@ -326,6 +380,7 @@ function getAbilityTooltipData(oldData, name, abilityId) {
             version: version,
             image: image,
             passive: passive,
+            abilityName: abilityName,
         }
     };
     return data;
@@ -442,7 +497,7 @@ function ChampionAbilityLevelUp(e) {
     var i = $(e.target).attr("data-i");
     var abilityId = "";
     var data = {};
-    
+
     if ($(e.target).hasClass("ChampionPLevelUp")) {
         abilityId = "ChampionPLevel";
     }

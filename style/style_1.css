@@ -292,6 +292,10 @@ h2 {
 	text-align: left;
 }
 
+.TooltipContainer {
+	overflow: hidden;
+}
+
 .TooltipContainer > * {
 	display: inline-block;
 	vertical-align: text-top;
@@ -311,8 +315,18 @@ h2 {
 	font-style: italic;
 }
 
-.ItemTooltipImage {
+.TooltipImage {
 	border: 1px double black;
+	width: 50px;
+}
+
+.ItemTooltip {
+	max-width: 500px;
+}
+
+.ItemTooltipImage {
+	width: 25px;
+	height: 25px;
 }
 
 stats {
@@ -334,6 +348,19 @@ grouplimit {
 
 .ItemTooltipDescription {
 	color: black;
+}
+
+.AbilityTooltip {
+	min-width: 350px;
+	max-width: 500px;
+}
+
+.AbilityTooltipDescription {
+	color: black;
+}
+
+.AbilityTooltipDetails {
+	color: yellow;
 }
 
 a:link {

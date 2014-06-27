@@ -11,7 +11,7 @@ echo <<<EOT
 <div class="Tooltip ItemTooltip">
     <!-- Image, Name, Gold -->
     <div class="TooltipBlock TooltipContainer">
-        <img class="TooltipImage ItemTooltipImage" src="$image" width="25px" height="25px" />
+        <img class="TooltipImage ItemTooltipImage" src="$image"/>
         <div class="TooltipBlock">
             <span class="TooltipHeading ItemTooltipHeading">$name</span>
             <br />
