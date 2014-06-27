@@ -206,7 +206,7 @@ h2 {
 }
 
 .StatsDisplayTableKey {
-	font-weight: bold;	
+	font-weight: bold;
 	text-align: right;
 	background-color: yellow;
 	color: green;
@@ -223,38 +223,65 @@ h2 {
 	background: #4BADF5;
 }
 
-.AbilitiesDisplayTable td{
+.AbilitiesDisplayTable td {
 	width: 100px;
 	border: 1px solid black;
+	padding: 2px;
 	'vertical-align: middle;
 	background: #4BADF5;
 }
 
-.ChampionAbilityStats {
-	font-size: 0.75em;
-	vertical-align: top;
+.ChampionAbilityLevelUpContainer {
+	display: inline-block;
+	vertical-align: middle;
+	width: 44px;
 }
 
-.ChampionAbilityLevel[data-champion-ability-set=false]{
+.ChampionAbilityLevelUp {
+	display: block;
+	height: 25px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bolder;
+	background-color: green;
+	color: black;
+	outline: 1px solid white;
+}
+.ChampionAbilityLevelDown {
+	display: block;
+	height: 25px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bolder;
+	background-color: brown;
+	color: black;
+	outline: 1px solid white;
+}
+
+.ChampionAbilityLevel[data-champion-ability-set=false] {
 	display: inline-block;
+	background-color: silver;
 	height: 20px;
 	outline: 1px solid black;
 }
-.ChampionAbilityLevel[data-champion-ability-set=true]{
+.ChampionAbilityLevel[data-champion-ability-set=true] {
 	display: inline-block;
-	background-color: orange;
+	background-color: purple;
 	height: 20px;
 	outline: 1px solid black;
 }
 
 .AbilityImage {
-	border: 2px double black;
+	outline: 2px double black;
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
 }
 
 /*
  ******************************************************************************
  *******************************Tooltip Styles*********************************
- ****************************************************************************** 
+ ******************************************************************************
  */
 
 .Tooltip {
@@ -288,7 +315,6 @@ h2 {
 	border: 1px double black;
 }
 
-
 stats {
 	color: yellow;
 }
@@ -303,7 +329,7 @@ unique {
 }
 
 grouplimit {
-	color:red;
+	color: red;
 }
 
 .ItemTooltipDescription {

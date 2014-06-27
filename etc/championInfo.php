@@ -96,8 +96,8 @@ echo <<<EOT
                 </tr>
                 <tr>
                     <td class="LevelDisplayTableStats ChampionSetlevel1"> 1 </td>
-                    <td class="LevelDisplayTableStats ChampionSetlevelp1"> +1 </td>
                     <td class="LevelDisplayTableStats ChampionSetlevelm1"> -1 </td>
+                    <td class="LevelDisplayTableStats ChampionSetlevelp1"> +1 </td>
                     <td class="LevelDisplayTableStats ChampionSetlevel18"> 18 </td>
                 </tr>
             </table>
@@ -171,11 +171,37 @@ echo <<<EOT
         <span class="ChampionInfoHeading ChampionInfoSubHeading">Abilities</span>
         <table class="AbilitiesDisplayTable">
             <tr>
-                <td><img class="AbilityImage ChampionPImage" src=" " width="50px" height="50px"></img></td>
-                <td><img class="AbilityImage ChampionQImage" src=" " width="50px" height="50px"></img></td>
-                <td><img class="AbilityImage ChampionWImage" src=" " width="50px" height="50px"></img></td>
-                <td><img class="AbilityImage ChampionEImage" src=" " width="50px" height="50px"></img></td>
-                <td><img class="AbilityImage ChampionRImage" src=" " width="50px" height="50px"></img></td>
+                <td>
+	                <img class="AbilityImage ChampionPImage" src=" "></img>
+	                <div class="ChampionAbilityLevelUpContainer">
+		                <span class="ChampionAbilityLevelUp ChampionPLevelUp">+</span>
+		                <span class="ChampionAbilityLevelDown ChampionPLevelDown">-</span>
+	                </div>
+                </td>
+                <td><img class="AbilityImage ChampionQImage" src=" "></img>
+                	<div class="ChampionAbilityLevelUpContainer">
+		                <span class="ChampionAbilityLevelUp ChampionQLevelUp">+</span>
+		                <span class="ChampionAbilityLevelDown ChampionQLevelDown">-</span>
+	                </div>
+                </td>
+                <td><img class="AbilityImage ChampionWImage" src=" "></img>
+	                <div class="ChampionAbilityLevelUpContainer">
+		                <span class="ChampionAbilityLevelUp ChampionWLevelUp">+</span>
+		                <span class="ChampionAbilityLevelDown ChampionWLevelDown">-</span>
+	                </div>
+                </td>
+                <td><img class="AbilityImage ChampionEImage" src=" "></img>
+	                <div class="ChampionAbilityLevelUpContainer">
+		                <span class="ChampionAbilityLevelUp ChampionELevelUp">+</span>
+		                <span class="ChampionAbilityLevelDown ChampionELevelDown">-</span>
+	                </div>
+                </td>
+                <td><img class="AbilityImage ChampionRImage" src=" "></img>
+                	<div class="ChampionAbilityLevelUpContainer">
+		                <span class="ChampionAbilityLevelUp ChampionRLevelUp">+</span>
+		                <span class="ChampionAbilityLevelDown ChampionRLevelDown">-</span>
+	                </div>
+                </td>
             </tr>
             <tr>
             	<td class="ChampionPLevel"></td>
@@ -185,6 +211,11 @@ echo <<<EOT
             	<td class="ChampionRLevel"></td>
             </tr>
         </table>
+        <div class="ChampionPTooltip"></div>
+        <div class="ChampionQTooltip"></div>
+        <div class="ChampionWTooltip"></div>
+        <div class="ChampionETooltip"></div>
+        <div class="ChampionRTooltip"></div>
     </div>
 
 </div>

@@ -30,7 +30,7 @@ $(document).ready(function() {
         $("#addChampButton").slideDown("slow");
 
     }, {
-        url: "https://euw.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
+        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
         options: [{
             key: "champData",
             value: "image,stats,spells,passive"
@@ -46,7 +46,7 @@ $(document).ready(function() {
         console.log("Items:");
         console.log(itemInfo);
     }, {
-        url: "https://euw.api.pvp.net/api/lol/static-data/euw/v1.2/item",
+        url: "https://prod.api.pvp.net/api/lol/static-data/euw/v1.2/item",
         options: [{
             key: "itemListData",
             //value: "from,gold,image,into,maps,requiredChampion,stats,tags,tree"
@@ -77,7 +77,9 @@ $(document).ready(function() {
                 runes: {},
                 masteries: {},
                 level: 1,
-                tooltips: getTooltipData({}, 3340, "ChampionTrinketTooltip"),
+                abilityLevel: getAbilityLevelData(champion),
+                itemTooltips: getItemTooltipData({}, 3340, "ChampionTrinketTooltip"),
+                abilityTooltips: getAbilityTooltipData({}, 0, "ChampionQTooltip"),
                 abilities: getAbilityData(champion),
                 championStats: getChampionData(champion),
                 stats: {}
@@ -90,12 +92,12 @@ $(document).ready(function() {
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem4");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem5");
             championInfo[champion][i].items = getItemsData(championInfo[champion][i].items, 3072, "ChampionItem6");
-            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem1Tooltip");
-            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem2Tooltip");
-            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem3Tooltip");
-            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem4Tooltip");
-            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem5Tooltip");
-            championInfo[champion][i].tooltips = getTooltipData(championInfo[champion][i].tooltips, 3072, "ChampionItem6Tooltip");
+            championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem1Tooltip");
+            championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem2Tooltip");
+            championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem3Tooltip");
+            championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem4Tooltip");
+            championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem5Tooltip");
+            championInfo[champion][i].itemTooltips = getItemTooltipData(championInfo[champion][i].itemTooltips, 3072, "ChampionItem6Tooltip");
 
             $(text).appendTo("#selectedChamps");
             setStats(champion, i);
@@ -106,13 +108,16 @@ $(document).ready(function() {
             fillChampionInfo({
                 ChampionLevel: championInfo[champion][i].level
             }, champion, i);
-            fillChampionInfo(championInfo[champion][i].tooltips, champion, i);
+            fillChampionInfo(championInfo[champion][i].itemTooltips, champion, i);
+            fillChampionInfo(championInfo[champion][i].abilityTooltips, champion, i);
 
             $("#" + id + " .ChampionRemove").click(ChampionRemove);
             $("#" + id + " .ChampionSetlevel1").click(ChampionSetLevel1);
             $("#" + id + " .ChampionSetlevelp1").click(ChampionIncreaseLevel);
             $("#" + id + " .ChampionSetlevelm1").click(ChampionDecreaseLevel);
             $("#" + id + " .ChampionSetlevel18").click(ChampionSetLevel18);
+            $("#" + id + " .ChampionAbilityLevelUp").click(ChampionAbilityLevelUp);
+            $("#" + id + " .ChampionAbilityLevelDown").click(ChampionAbilityLevelDown);
             $("#" + id + " .ChampionItem1").Tooltip("#" + id + " .ChampionItem1Tooltip");
             $("#" + id + " .ChampionItem2").Tooltip("#" + id + " .ChampionItem2Tooltip");
             $("#" + id + " .ChampionItem3").Tooltip("#" + id + " .ChampionItem3Tooltip");
@@ -120,6 +125,9 @@ $(document).ready(function() {
             $("#" + id + " .ChampionItem5").Tooltip("#" + id + " .ChampionItem5Tooltip");
             $("#" + id + " .ChampionItem6").Tooltip("#" + id + " .ChampionItem6Tooltip");
             $("#" + id + " .ChampionTrinket").Tooltip("#" + id + " .ChampionTrinketTooltip");
+            
+            //Test
+            $("#" + id + " .AbilityImage").Tooltip("#" + id + " .ChampionQTooltip");
 
         }, {
             name: champ,
@@ -193,6 +201,22 @@ function getItemsData(oldData, itemId, slotId) {
     return data;
 }
 
+function getAbilityLevelData(name) {
+    var data = {};
+    data.ChampionPLevel = 0;
+    data.ChampionPLevelMax = 1;
+    data.ChampionQLevel = 0;
+    data.ChampionQLevelMax = champions[ids[name]].spells[0].maxrank;
+    data.ChampionWLevel = 0;
+    data.ChampionWLevelMax = champions[ids[name]].spells[1].maxrank;
+    data.ChampionELevel = 0;
+    data.ChampionELevelMax = champions[ids[name]].spells[2].maxrank;
+    data.ChampionRLevel = 0;
+    data.ChampionRLevelMax = champions[ids[name]].spells[3].maxrank;
+
+    return data;
+}
+
 function getAbilityData(name) {
     var data = {};
 
@@ -201,11 +225,11 @@ function getAbilityData(name) {
     data.ChampionWImage = "url:" + getImageUrl(version, champions[ids[name]].spells[1].image.group, champions[ids[name]].spells[1].image.full);
     data.ChampionEImage = "url:" + getImageUrl(version, champions[ids[name]].spells[2].image.group, champions[ids[name]].spells[2].image.full);
     data.ChampionRImage = "url:" + getImageUrl(version, champions[ids[name]].spells[3].image.group, champions[ids[name]].spells[3].image.full);
-    data.ChampionPLevel = setSkillsLevelBar(name, "ChampionPLevel", 1);
-    data.ChampionQLevel = setSkillsLevelBar(name, "ChampionQLevel", 3);
-    data.ChampionWLevel = setSkillsLevelBar(name, "ChampionWLevel", 1);
-    data.ChampionELevel = setSkillsLevelBar(name, "ChampionELevel", 1);
-    data.ChampionRLevel = setSkillsLevelBar(name, "ChampionRLevel", 1);
+    data.ChampionPLevel = setSkillsLevelBar(name, "ChampionPLevel", 0);
+    data.ChampionQLevel = setSkillsLevelBar(name, "ChampionQLevel", 0);
+    data.ChampionWLevel = setSkillsLevelBar(name, "ChampionWLevel", 0);
+    data.ChampionELevel = setSkillsLevelBar(name, "ChampionELevel", 0);
+    data.ChampionRLevel = setSkillsLevelBar(name, "ChampionRLevel", 0);
     return data;
 }
 
@@ -251,7 +275,7 @@ function getChampionData(name) {
     return data;
 }
 
-function getTooltipData(oldData, itemId, slotId) {
+function getItemTooltipData(oldData, itemId, slotId) {
     var data = oldData;
     if (!data[slotId]) {
         data[slotId] = {};
@@ -263,7 +287,7 @@ function getTooltipData(oldData, itemId, slotId) {
     var image = itemInfo.data[itemId].image.full;
 
     data[slotId] = {
-        url: "../etc/itemHover.php",
+        url: "../etc/itemTooltip.php",
         header: {
             name: name,
             gold: gold,
@@ -273,6 +297,37 @@ function getTooltipData(oldData, itemId, slotId) {
         }
     };
 
+    return data;
+};
+
+function getAbilityTooltipData(oldData, name, abilityId) {
+    var data = oldData;
+    if (!data[abilityId]) {
+        data[abilityId] = {};
+    }
+    
+    var name;
+    var description;
+    var cooldown;
+    var cost;
+    var details;
+    var version;
+    var image;
+    var passive;
+    
+    data[abilityId] = {
+        url: "../etc/abilityTooltip.php",
+        header: {
+            name: name,
+            description: description,
+            cooldown: cooldown,
+            cost: cost,
+            details: details,
+            version: version,
+            image: image,
+            passive: passive,
+        }
+    };
     return data;
 };
 
@@ -320,7 +375,7 @@ function setSkillsLevelBar(name, abilityId, level) {
         }
         maxrank = champions[ids[name]].spells[spellId].maxrank;
     }
-    
+
     elem = $("<div></div>");
     var width = 1 / maxrank * 100;
     for (var i = 0; i < level; i++) {
@@ -379,6 +434,74 @@ function ChampionSetLevel18(e) {
     fillChampionInfo({
         ChampionLevel: championInfo[name][i].level = 18
     }, name, i);
+    setStats(name, i);
+}
+
+function ChampionAbilityLevelUp(e) {
+    var name = $(e.target).attr("data-name");
+    var i = $(e.target).attr("data-i");
+    var abilityId = "";
+    var data = {};
+    
+    if ($(e.target).hasClass("ChampionPLevelUp")) {
+        abilityId = "ChampionPLevel";
+    }
+    else if ($(e.target).hasClass("ChampionQLevelUp")) {
+        abilityId = "ChampionQLevel";
+    }
+    else if ($(e.target).hasClass("ChampionWLevelUp")) {
+        abilityId = "ChampionWLevel";
+    }
+    else if ($(e.target).hasClass("ChampionELevelUp")) {
+        abilityId = "ChampionELevel";
+    }
+    else if ($(e.target).hasClass("ChampionRLevelUp")) {
+        abilityId = "ChampionRLevel";
+    }
+
+    if (championInfo[name][i].abilityLevel[abilityId] >= championInfo[name][i].abilityLevel[abilityId + "Max"]) {
+        championInfo[name][i].abilityLevel[abilityId] = championInfo[name][i].abilityLevel[abilityId + "Max"];
+        data[abilityId] = setSkillsLevelBar(name, abilityId, championInfo[name][i].abilityLevel[abilityId]);
+    }
+    else {
+        data[abilityId] = setSkillsLevelBar(name, abilityId, ++championInfo[name][i].abilityLevel[abilityId]);
+    }
+
+    fillChampionInfo(data, name, i);
+    setStats(name, i);
+}
+
+function ChampionAbilityLevelDown(e) {
+    var name = $(e.target).attr("data-name");
+    var i = $(e.target).attr("data-i");
+    var abilityId = "";
+    var data = {};
+
+    if ($(e.target).hasClass("ChampionPLevelDown")) {
+        abilityId = "ChampionPLevel";
+    }
+    else if ($(e.target).hasClass("ChampionQLevelDown")) {
+        abilityId = "ChampionQLevel";
+    }
+    else if ($(e.target).hasClass("ChampionWLevelDown")) {
+        abilityId = "ChampionWLevel";
+    }
+    else if ($(e.target).hasClass("ChampionELevelDown")) {
+        abilityId = "ChampionELevel";
+    }
+    else if ($(e.target).hasClass("ChampionRLevelDown")) {
+        abilityId = "ChampionRLevel";
+    }
+
+    if (championInfo[name][i].abilityLevel[abilityId] <= 0) {
+        championInfo[name][i].abilityLevel[abilityId] = 0;
+        data[abilityId] = setSkillsLevelBar(name, abilityId, championInfo[name][i].abilityLevel[abilityId]);
+    }
+    else {
+        data[abilityId] = setSkillsLevelBar(name, abilityId, --championInfo[name][i].abilityLevel[abilityId]);
+    }
+
+    fillChampionInfo(data, name, i);
     setStats(name, i);
 }
 
