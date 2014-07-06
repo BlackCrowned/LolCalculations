@@ -9,6 +9,7 @@ $(document).ready(function() {
     $("#addChampList").hide(0);
     $("#addChampButton").hide(0);
 
+    //Download partial Data / For names
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         championInfo = json;
         version = championInfo.version;
@@ -27,13 +28,11 @@ $(document).ready(function() {
             $("#addChampList").append("<option value='" + sorted[i][1] + "'>" + champions[sorted[i][1]].name + "</option>");
         }
         $("#addChampList").slideDown("slow");
-        $("#addChampButton").slideDown("slow");
-
     }, {
         url: "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
         options: [{
             key: "champData",
-            value: "image,stats,spells,passive"
+            value: ""
         }, {
             key: "region",
             value: "euw"
@@ -41,10 +40,33 @@ $(document).ready(function() {
     }, {
         content: "json",
     });
+
+    //Download full data
+    $().AJAX("../etc/riotAPICalls.php", function(json) {
+        for (var i in json.data) {
+            json.data[i].complete = 1;
+            championInfo.data[i] = json.data[i];
+            champions[json.data[i].id] = json.data[i];
+        }
+        parseChampionInfo();
+    }, {
+        url: "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion",
+        options: [{
+            key: "champData",
+            value: "all"
+        }, {
+            key: "region",
+            value: "euw"
+        }]
+    }, {
+        content: "json",
+    });
+
     $().AJAX("../etc/riotAPICalls.php", function(json) {
         itemInfo = json;
         console.log("Items:");
         console.log(itemInfo);
+        $("#addChampButton").fadeIn("slow").removeAttr("disabled");
     }, {
         url: "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/item",
         options: [{
@@ -64,6 +86,9 @@ $(document).ready(function() {
         if (!championInfo[champ]) {
             championInfo[champ] = [];
         }
+
+        getChampionInfo(champ);
+
         var i = championInfo[champ].length;
         $.AJAX("../etc/championInfo.php", function(text, readyState, status, champion) {
 
@@ -134,7 +159,6 @@ $(document).ready(function() {
             $("#" + id + " .ChampionWImage").Tooltip("#" + id + " .ChampionWTooltip");
             $("#" + id + " .ChampionEImage").Tooltip("#" + id + " .ChampionETooltip");
             $("#" + id + " .ChampionRImage").Tooltip("#" + id + " .ChampionRTooltip");
-            
 
         }, {
             name: champ,
@@ -148,6 +172,47 @@ $(document).ready(function() {
         });
     });
 });
+
+function getChampionInfo(champion) {
+    if (!championInfo.data[champion].complete) {
+        $().AJAX("../etc/riotAPICalls.php", function(json) {
+            json.complete = 1;
+            champions[championInfo.data[champion].id] = championInfo.data[champion] = json;
+            parseChampionInfo(champion);
+        }, {
+            url: "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion/" + championInfo.data[champion].id,
+            options: [{
+                key: "champData",
+                //value:
+                value: "all"
+            }, {
+                key: "region",
+                value: "euw"
+            }]
+        }, {
+            content: "json",
+            async: false
+        });
+    }
+}
+
+function parseChampionInfo(champion) {
+    function parse(champion, id) {
+        
+        //Insert own Data here
+                
+        championInfo.data[champion] = champions[i];
+    }
+
+    if (champion) {
+        parse(champion, ids[champion]);
+    }
+    else {
+        for (var i in champions) {
+            parse(champions[i].name, i);
+        }
+    }
+}
 
 function fillChampionInfo(data, name, i) {
     for (var c in data) {
