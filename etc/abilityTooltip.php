@@ -4,7 +4,7 @@ $name = $_REQUEST["name"];
 $description = $_REQUEST["description"];
 $cooldown = $_REQUEST["cooldown"];
 $cost = $_REQUEST["cost"];
-$details = $_REQUEST["details"];
+$effect = $_REQUEST["effect"];
 $version = $_REQUEST["version"];
 $image_file = $_REQUEST["image"];
 $passive = $_REQUEST["passive"];
@@ -39,7 +39,9 @@ echo <<<EOT
 	</div>
 	<!-- Details -->
 	<div class="TooltipBlock">
-		<span class="AbilityTooltipDetails">Details coming soon...</span>
+		<span class="AbilityTooltipDetails">Effect coming soon...</span>
+		<br />
+		<span class="AbilityTooltipDetails">$effect</span>
 	</div>
 </div>
 EOT;

@@ -344,7 +344,7 @@ function getAbilityTooltipData(oldData, abilityName, slotId, championName) {
     var description;
     var cooldown;
     var cost;
-    var details;
+    var effect;
     var image;
 
     if (passive == 1) {
@@ -352,7 +352,7 @@ function getAbilityTooltipData(oldData, abilityName, slotId, championName) {
         description = champions[ids[championName]].passive.description;
         cooldown = champions[ids[championName]].passive.cooldownBurn;
         cost = "No cost";
-        details = "";
+        effect = champions[ids[championName]].passive.effect;
         image = champions[ids[championName]].passive.image.full;
     }
     else {
@@ -365,7 +365,7 @@ function getAbilityTooltipData(oldData, abilityName, slotId, championName) {
         else {
             cost = champions[ids[championName]].spells[abilityId].costBurn + " " + champions[ids[championName]].spells[abilityId].costType;
         }
-        details = "";
+        effect = champions[ids[championName]].spells[abilityId].effect;
         image = champions[ids[championName]].spells[abilityId].image.full;
     }
 
@@ -376,7 +376,7 @@ function getAbilityTooltipData(oldData, abilityName, slotId, championName) {
             description: description,
             cooldown: cooldown,
             cost: cost,
-            details: details,
+            effect: effect,
             version: version,
             image: image,
             passive: passive,
