@@ -10,7 +10,7 @@ $(document).ready(function() {
     $("#addChampButton").hide(0);
 
     //Download partial Data / For names
-    $().AJAX("../etc/riotAPICalls.php", function(json) {
+    $.AJAX("../etc/riotAPICalls.php", function(json) {
         championInfo = json;
         version = championInfo.version;
         console.log("Champions:");
@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
 
     //Download full data
-    $().AJAX("../etc/riotAPICalls.php", function(json) {
+    $.AJAX("../etc/riotAPICalls.php", function(json) {
         for (var i in json.data) {
             json.data[i].complete = 1;
             championInfo.data[i] = json.data[i];
@@ -62,7 +62,7 @@ $(document).ready(function() {
         content: "json",
     });
 
-    $().AJAX("../etc/riotAPICalls.php", function(json) {
+    $.AJAX("../etc/riotAPICalls.php", function(json) {
         itemInfo = json;
         console.log("Items:");
         console.log(itemInfo);
@@ -128,7 +128,7 @@ $(document).ready(function() {
             championInfo[champion][i].abilityTooltips = getAbilityTooltipData(championInfo[champion][i].abilityTooltips, "E", "ChampionETooltip", champion);
             championInfo[champion][i].abilityTooltips = getAbilityTooltipData(championInfo[champion][i].abilityTooltips, "R", "ChampionRTooltip", champion);
 
-            $(text).appendTo("#selectedChamps");
+            $(text).css("display", "none").appendTo("#selectedChamps");
             setStats(champion, i);
             $("#" + id).children(1, 1).attr("data-name", champion).attr("data-i", i);
             fillChampionInfo(championInfo[champion][i].stats, champion, i);
@@ -159,6 +159,8 @@ $(document).ready(function() {
             $("#" + id + " .ChampionWImage").Tooltip("#" + id + " .ChampionWTooltip");
             $("#" + id + " .ChampionEImage").Tooltip("#" + id + " .ChampionETooltip");
             $("#" + id + " .ChampionRImage").Tooltip("#" + id + " .ChampionRTooltip");
+            
+            $("#" + id).fadeIn("slow");
 
         }, {
             name: champ,
