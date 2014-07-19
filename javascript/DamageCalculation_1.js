@@ -159,7 +159,7 @@ $(document).ready(function() {
             $("#" + id + " .ChampionWImage").Tooltip("#" + id + " .ChampionWTooltip");
             $("#" + id + " .ChampionEImage").Tooltip("#" + id + " .ChampionETooltip");
             $("#" + id + " .ChampionRImage").Tooltip("#" + id + " .ChampionRTooltip");
-            
+
             $("#" + id).fadeIn("slow");
 
         }, {
@@ -176,7 +176,7 @@ $(document).ready(function() {
 
 function getChampionInfo(champion) {
     if (!championInfo.data[champion].complete) {
-        $().AJAX("../etc/riotAPICalls.php", function(json) {
+        $.AJAX("../etc/riotAPICalls.php", function(json) {
             json.complete = 1;
             champions[championInfo.data[champion].id] = championInfo.data[champion] = json;
             parseChampionInfo(champion);
@@ -199,9 +199,9 @@ function getChampionInfo(champion) {
 
 function parseChampionInfo(champion) {
     function parse(champion, id) {
-        
+
         //Insert own Data here
-                
+
         championInfo.data[champion] = champions[i];
     }
 
