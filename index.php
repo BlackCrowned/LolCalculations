@@ -18,6 +18,9 @@
 			<div class="Selectable" id="DamageCalc">
 				<a href="Damage Calculation/index.php"> Damage Calculation </a>
 			</div>
+			<div class="Selectable" id="TestPage">
+				<a href="TestPage/index.php"> Test Page </a>
+			</div>
 			
 			<script>
 			    
