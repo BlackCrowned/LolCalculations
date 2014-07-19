@@ -170,7 +170,6 @@ $(document).ready(function() {
             splash: champions[ids[champ]].image.full
         }, {
             args: champ,
-            content: "text",
         });
     });
 });
