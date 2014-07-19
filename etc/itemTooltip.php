@@ -2,6 +2,7 @@
 
 $name = $_REQUEST["name"];
 $gold = $_REQUEST["gold"];
+$recipe_cost = $_REQUEST["recipe_cost"];
 $description = $_REQUEST["description"];
 $version = $_REQUEST["version"];
 $image_file = $_REQUEST["image"];
@@ -15,7 +16,7 @@ echo <<<EOT
         <div class="TooltipBlock">
             <span class="TooltipHeading ItemTooltipHeading">$name</span>
             <br />
-            <span class="">Gold: </span><span class="ItemTooltipGold">$gold</span>
+            <span class="">Gold: </span><span class="ItemTooltipGold">$gold($recipe_cost)</span>
         </div>
 
     </div>

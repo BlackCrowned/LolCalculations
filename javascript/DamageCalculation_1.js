@@ -356,6 +356,7 @@ function getItemTooltipData(oldData, itemId, slotId) {
 
     var name = itemInfo.data[itemId].name;
     var gold = itemInfo.data[itemId].gold.total;
+    var recipe_cost = itemInfo.data[itemId].gold.base;
     var description = itemInfo.data[itemId].description;
     var image = itemInfo.data[itemId].image.full;
 
@@ -364,6 +365,7 @@ function getItemTooltipData(oldData, itemId, slotId) {
         header: {
             name: name,
             gold: gold,
+            recipe_cost: recipe_cost,
             description: description,
             version: version,
             image: image,
