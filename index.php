@@ -21,13 +21,15 @@
 			<div class="Selectable" id="TestPage">
 				<a href="TestPage/index.php"> Test Page </a>
 			</div>
-			
+			<div class="Selectable" id="DatabasePage">
+				<a href="DatabasePage/index.php">Database Page</a>
+			</div>
+
 			<script>
-			    
-			    $(".Selectables");
-			    $("#DamageCalc");
-			    $(".Selectable#DamageCalc");
-			    
+				$(".Selectables");
+				$("#DamageCalc");
+				$(".Selectable#DamageCalc");
+
 			</script>
 
 		</div>
